@@ -1,40 +1,37 @@
 # https://leetcode.com/problems/single-element-in-a-sorted-array/#/description
-from collections import deque
 class Solution(object):
-    def minMutation(self, start, end, bank):
+    def recursiveSingleNonDuplicate(self,nums):
+        if len(nums) == 1 :
+            return True,nums[0]
+        elif len(nums) == 2 or len(nums)==0:
+            return False,0
+        n = len(nums)/2
+        if nums[n] == nums[n-1]:
+            res1,num1 = self.recursiveSingleNonDuplicate(nums[0:n+1])
+            res2,num2 = self.recursiveSingleNonDuplicate(nums[n+1:])
+            if res1:
+                return True, num1
+            elif res2:
+                return True, num2
+            else:
+                return False, 0
+        elif nums[n] == nums[n+1]:
+            res1,num1 = self.recursiveSingleNonDuplicate(nums[0:n])
+            res2,num2 = self.recursiveSingleNonDuplicate(nums[n:])
+            if res1:
+                return True, num1
+            elif res2:
+                return True, num2
+            else:
+                return False, 0
+        else:
+            return True,nums[n]
+
+    def singleNonDuplicate(self, nums):
         """
-        :type start: str
-        :type end: str
-        :type bank: List[str]
+        :type nums: List[int]
         :rtype: int
         """
-        genes = ['A','C','G','T']
-        mybank = set()
-        for s in bank:
-            mybank.add(s)
-            
-        myqueue = deque()
-        myqueue.append(start)
-        level = 0
-        myqueue2 = deque()
-        while len(myqueue)>0:
-            curr = myqueue.popleft()
-            if curr == end:
-                return level
-            curr = list(curr)
-            for i in range(len(curr)):
-                for gene in genes:
-                    prev = curr[i]
-                    curr[i] = gene
-                    curr_string = ''.join(curr)
-                    if curr_string in bank:
-                        bank.remove(curr_string)
-                        myqueue2.append(curr_string)
-                    curr[i] = prev
-            if len(myqueue)==0 and len(myqueue2)!=0:
-                myqueue = copy.deepcopy(myqueue2)
-                myqueue2.clear()
-                level += 1
-                
-        return -1 
-            
+        _,res = self.recursiveSingleNonDuplicate(nums)
+        return res
+        
