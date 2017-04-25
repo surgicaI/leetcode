@@ -19,8 +19,11 @@ class Solution(object):
         :type desiredTotal: int
         :rtype: bool
         """
-        if maxChoosableInteger*(maxChoosableInteger+1)/2 < desiredTotal:
+        sum = maxChoosableInteger*(maxChoosableInteger+1)/2
+        if sum < desiredTotal:
             return False
+        elif sum == desiredTotal:
+            return maxChoosableInteger%2 != 0
         self.memo = {}
         nums = list(range(1,maxChoosableInteger+1))
         return self.canPlayerwin(nums, desiredTotal)
