@@ -1,4 +1,4 @@
-# https://leetcode.com/problems/single-element-in-a-sorted-array/#/description
+# https://leetcode.com/problems/single-element-in-a-sorted-array/
 class Solution(object):
     def recursiveSingleNonDuplicate(self,nums):
         if len(nums) == 1 :
