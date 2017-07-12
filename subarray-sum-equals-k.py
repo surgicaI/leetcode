@@ -22,3 +22,23 @@ class Solution(object):
                 res += 1 if x >= i else 0
             sum += nums[i]
         return res
+
+# Solution 2
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        sums = []
+        result = 0
+        myMap = collections.Counter()
+        myMap[0] = 1
+        for num in nums:
+            sums.append(sums[-1]+num) if sums else sums.append(num)
+        for val in sums:
+            balance = val - k
+            result += myMap[balance]
+            myMap[val] += 1
+        return result
